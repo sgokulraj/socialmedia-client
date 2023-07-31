@@ -22,8 +22,13 @@ function Post({
   const token = useSelector((state) => state.token);
   const userIdLogged = useSelector((state) => state.user._id);
   const [isComments, setIsComments] = useState(false);
-  const isLiked = Boolean(likes[userIdLogged]);
-  const likesCount = Object.keys(likes).length;
+  let isLiked;
+  let likesCount
+  if (likes) {
+     isLiked = Boolean(likes[userIdLogged]);
+     likesCount = Object.keys(likes).length;
+  }
+
 
   const likePostUpdate = async () => {
     const res = await fetch(`http://localhost:5000/posts/${postId}/likes`, {
@@ -82,12 +87,14 @@ function Post({
       </div>
       {isComments && (
         <div className="commentContainer">
-          {comments.map((comment, index) => {
-            <div key={index}>
-              <hr />
-              <p className="comment">{comment}</p>
-            </div>;
-          })}
+          {comments.length
+            ? comments.map((comment, index) => {
+                <div key={index}>
+                  <hr />
+                  <p className="comment">{comment}</p>
+                </div>;
+              })
+            : ""}
           <hr />
         </div>
       )}
