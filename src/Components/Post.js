@@ -76,7 +76,7 @@ function Post({
             <p onClick={() => setIsComments(!isComments)}>
               <FaRegComment />
             </p>
-            <p>{comments.length}</p>
+            <p>{comments ? comments.length: ""}</p>
           </div>
           <div>
             <p>
